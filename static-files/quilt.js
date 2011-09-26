@@ -27,7 +27,7 @@ function maybeFixupImageDimensions(element, size) {
       } else {
         $(this).height(null).width(size);
       }
-      $(this).fadeIn();
+      $(this).show();
     });
   }
 }
