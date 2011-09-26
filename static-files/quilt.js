@@ -34,7 +34,6 @@ function maybeFixupImageDimensions(element, size) {
 
 function buildQuilt(div) {
   var quilt = $('<div class="quilt"></div>');
-  var squareSize = SQUARE_SIZE;
 
   function addSquare(element) {
     var square = $('<div class="quilt-square"></div>');
@@ -49,29 +48,36 @@ function buildQuilt(div) {
       break;
       
       case this.ELEMENT_NODE:
-      maybeFixupYoutubeEmbed(this, squareSize);
-      maybeFixupImageDimensions(this, squareSize);
       addSquare(this);
       break;
     }
   });
 
+  return quilt;
+}
+
+function fixupQuilt(quilt, squareSize) {  
   var squaresPerSide = Math.floor(Math.sqrt(quilt.children().length));
   quilt.children().width(squareSize).height(squareSize);
   quilt.width(squareSize * squaresPerSide);
 
+  quilt.children().each(function() {
+    var element = this.firstChild;
+    maybeFixupYoutubeEmbed(element, squareSize);
+    maybeFixupImageDimensions(element, squareSize);
+  });
+  
   return quilt;
 }
 
-function loadQuilt(cb) {
+function loadQuilt() {
   var div = $("<div></div>").appendTo(document.body).hide();
   div.load("quilt.html", function() {
     $(".quilt").remove();
     var quilt = buildQuilt(div);
+    fixupQuilt(quilt, SQUARE_SIZE);
     quilt.appendTo(document.body);
     div.remove();
-    if (cb)
-      cb();
   });
 }
 
