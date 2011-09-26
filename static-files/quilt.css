@@ -1,0 +1,17 @@
+html, body {
+  font-family: "Baskerville", Georgia, serif;
+  margin: 0 auto;
+  background: black;
+  color: white;
+}
+
+.quilt-square {
+  float: left;
+  overflow: hidden;
+  font-size: 20px;
+}
+
+.quilt-square p {
+  padding-left: 10px;
+  padding-right: 10px;  
+}
