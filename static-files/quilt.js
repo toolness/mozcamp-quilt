@@ -1,4 +1,5 @@
 var SQUARE_SIZE = 128;
+var POLL_DELAY = 1000;
 
 function maybeFixupYoutubeEmbed(iframe, size) {
   var fullSize = Math.floor(1.38 * size);
@@ -38,13 +39,15 @@ function buildQuilt(div) {
   function addSquare(element) {
     var square = $('<div class="quilt-square"></div>');
     square.append(element).appendTo(quilt);
+    square.data("hash", square.html());
   }
 
   div.contents().each(function() {
     switch (this.nodeType) {
       case this.TEXT_NODE:
-      if (jQuery.trim(this.nodeValue).length)
-        addSquare(this);
+      var trimmed = jQuery.trim(this.nodeValue);
+      if (trimmed.length)
+        addSquare($("<div></div>").text(trimmed));
       break;
       
       case this.ELEMENT_NODE:
@@ -63,21 +66,55 @@ function fixupQuilt(quilt, squareSize) {
 
   quilt.children().each(function() {
     var element = this.firstChild;
-    maybeFixupYoutubeEmbed(element, squareSize);
-    maybeFixupImageDimensions(element, squareSize);
+    if (!$(element).data("fixed-up")) {
+      maybeFixupYoutubeEmbed(element, squareSize);
+      maybeFixupImageDimensions(element, squareSize);
+      $(element).data("fixed-up", true);
+    }
   });
   
   return quilt;
 }
 
+function applyQuiltChanges(oldQuilt, newQuilt) {
+  var oldChildren = oldQuilt.children();
+  var newChildren = newQuilt.children();
+    
+  oldChildren.each(function(i) {
+    var oldSquare = $(this);
+    var newSquare = $(newChildren[i]);
+    if (newSquare.length == 0) {
+      console.log("square", i, "removed");
+      oldSquare.remove();
+      return;
+    }
+    if (oldSquare.data("hash") != newSquare.data("hash")) {
+      oldSquare.data("hash", newSquare.data("hash"));
+      oldSquare.empty().append(newSquare.children());
+      console.log("square", i, "changed");
+    }
+  });
+
+  if (oldChildren.length < newChildren.length) {
+    console.log(newChildren.length - oldChildren.length, "square(s) added");
+    oldQuilt.append(newChildren.slice(oldChildren.length));
+  }
+}
+
 function loadQuilt() {
   var div = $("<div></div>").appendTo(document.body).hide();
   div.load("quilt.html", function() {
-    $(".quilt").remove();
     var quilt = buildQuilt(div);
-    fixupQuilt(quilt, SQUARE_SIZE);
-    quilt.appendTo(document.body);
+    var oldQuilt = $(".quilt");
+    if (oldQuilt.length) {
+      applyQuiltChanges(oldQuilt, quilt);
+      fixupQuilt(oldQuilt, SQUARE_SIZE);
+    } else {
+      fixupQuilt(quilt, SQUARE_SIZE);
+      quilt.appendTo(document.body);
+    }
     div.remove();
+    setTimeout(loadQuilt, POLL_DELAY);
   });
 }
 
