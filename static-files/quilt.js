@@ -101,6 +101,8 @@ function applyQuiltChanges(oldQuilt, newQuilt) {
   }
 }
 
+var lastLoad = new Date();
+
 function loadQuilt() {
   var div = $("<div></div>").appendTo(document.body).hide();
   div.load("quilt.html", function() {
@@ -114,10 +116,14 @@ function loadQuilt() {
       quilt.appendTo(document.body);
     }
     div.remove();
+    lastLoad = new Date();
     setTimeout(loadQuilt, POLL_DELAY);
   });
 }
 
 $(window).ready(function() {
+  setInterval(function() {
+    $(".last-load").text($.timeago(lastLoad));
+  }, 1000);
   loadQuilt();
 });

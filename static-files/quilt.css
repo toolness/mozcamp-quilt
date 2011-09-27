@@ -1,8 +1,12 @@
 html, body {
-  font-family: "Baskerville", Georgia, serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin: 0 auto;
   background: black;
   color: white;
+}
+
+.quilt {
+  font-family: "Baskerville", Georgia, serif;
 }
 
 .quilt-square {
@@ -14,4 +18,14 @@ html, body {
 .quilt-square p {
   padding-left: 10px;
   padding-right: 10px;  
+}
+
+#info {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  font-size: 12px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.1);
 }
