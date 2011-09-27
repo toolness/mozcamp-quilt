@@ -5,6 +5,10 @@ html, body {
   color: white;
 }
 
+a {
+  color: inherit;
+}
+
 .quilt {
   font-family: "Baskerville", Georgia, serif;
 }
