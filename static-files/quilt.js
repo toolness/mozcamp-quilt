@@ -1,5 +1,6 @@
 var SQUARE_SIZE = 128;
-var POLL_DELAY = 1000;
+var POLL_DELAY = 10000;
+var ETHERPAD_GATEWAY = "http://etherpad-export.appspot.com/";
 
 function maybeFixupYoutubeEmbed(iframe, size) {
   var fullSize = Math.floor(1.38 * size);
@@ -101,29 +102,64 @@ function applyQuiltChanges(oldQuilt, newQuilt) {
   }
 }
 
-var lastLoad = new Date();
+function loadQuiltFromEtherpad(hostname, port, pad) {
+  var lastLoad = new Date();
+  var gateway = ETHERPAD_GATEWAY;
+  var params = {
+    server: hostname,
+    port: port,
+    pad: pad,
+    format: "txt"
+  };
 
-function loadQuilt() {
-  var div = $("<div></div>").appendTo(document.body).hide();
-  div.load("quilt.html", function() {
-    var quilt = buildQuilt(div);
-    var oldQuilt = $(".quilt");
-    if (oldQuilt.length) {
-      applyQuiltChanges(oldQuilt, quilt);
-      fixupQuilt(oldQuilt, SQUARE_SIZE);
-    } else {
-      fixupQuilt(quilt, SQUARE_SIZE);
-      quilt.appendTo(document.body);
-    }
-    div.remove();
-    lastLoad = new Date();
-    setTimeout(loadQuilt, POLL_DELAY);
-  });
-}
+  if (params.port == "0" || params.port == "")
+    params.port = "80";
 
-$(window).ready(function() {
   setInterval(function() {
     $(".last-load").text($.timeago(lastLoad));
   }, 1000);
-  loadQuilt();
+
+  function load() {
+    var div = $("<div></div>").appendTo(document.body).hide();
+    jQuery.ajax({
+      type: 'GET',
+      crossDomain: true,
+      url: gateway,
+      data: params,
+      dataType: "text",
+      error: function(jqXHR, textStatus, errorThrown) {
+        var msg = "Fetching the pad failed.";
+
+        if (jqXHR.status == 404) {
+          msg = "No pad exists at that url.";
+        }
+
+        console.log('error', msg);
+      },
+      success: function(data) {
+        div.html(data);
+        var quilt = buildQuilt(div);
+        var oldQuilt = $(".quilt");
+        if (oldQuilt.length) {
+          applyQuiltChanges(oldQuilt, quilt);
+          fixupQuilt(oldQuilt, SQUARE_SIZE);
+        } else {
+          fixupQuilt(quilt, SQUARE_SIZE);
+          quilt.appendTo(document.body);
+        }
+        lastLoad = new Date();
+      },
+      complete: function() {
+        div.remove();
+        setTimeout(load, POLL_DELAY);
+      },
+      timeout: 10000        
+    });    
+  }
+  
+  load();
+}
+
+$(window).ready(function() {
+  loadQuiltFromEtherpad("etherpad.mozilla.com", "9000", "sample-quilt");
 });
