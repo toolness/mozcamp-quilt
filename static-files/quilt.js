@@ -39,6 +39,11 @@ function maybeFixupSection(element, size) {
     var img = $(element).find("> img");
     if (img.length)
       maybeFixupImageDimensions(img[0], size);
+    var moreButton = $('<div class="more"></div>');
+    moreButton.click(function() {
+      
+    });
+    $(element).find("> ul > li:first-child").append(moreButton);
   }
 }
 
