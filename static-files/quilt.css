@@ -28,13 +28,13 @@ a {
   position: relative;
 }
 
-.quilt-square section img {
+.quilt-square section > img {
   position: absolute;
   top: 0px;
   left: 0px;
 }
 
-.quilt-square section h1 {
+.quilt-square section > h1 {
   position: absolute;
   top: 40px;
   left: 0px;
@@ -47,11 +47,21 @@ a {
   background: rgba(0, 0, 0, 0.5);
 }
 
-.quilt-square section:hover h1 {
+.quilt-square section:hover > h1 {
   display: none;
 }
 
-.quilt-square section aside {
+.quilt-square section > ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.quilt-square section > ul > li {
+  list-style-type: none;
+  display: none;
+}
+
+.quilt-square section > ul > li:first-child {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -64,19 +74,22 @@ a {
   padding: 10px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+}
+
+.quilt-square section > ul > li:first-child > blockquote:first-child {
   display: none;
 }
 
-.quilt-square section aside a {
+.quilt-square section > ul > li:first-child a {
   color: yellow;
   text-decoration: none;
 }
 
-.quilt-square section aside a:hover {
+.quilt-square section > ul > li:first-child a:hover {
   text-decoration: underline;
 }
 
-.quilt-square section:hover aside {
+.quilt-square section:hover > ul > li:first-child {
   display: block;
 }
 
