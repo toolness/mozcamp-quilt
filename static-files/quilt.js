@@ -34,6 +34,14 @@ function maybeFixupImageDimensions(element, size) {
   }
 }
 
+function maybeFixupSection(element, size) {
+  if (element.nodeName == "SECTION") {
+    var img = $(element).find("> img");
+    if (img.length)
+      maybeFixupImageDimensions(img[0], size);
+  }
+}
+
 function buildQuilt(div) {
   var quilt = $('<div class="quilt"></div>');
 
@@ -70,6 +78,7 @@ function fixupQuilt(quilt, squareSize) {
     if (!$(element).data("fixed-up")) {
       maybeFixupYoutubeEmbed(element, squareSize);
       maybeFixupImageDimensions(element, squareSize);
+      maybeFixupSection(element, squareSize);
       $(element).data("fixed-up", true);
     }
   });
@@ -161,5 +170,5 @@ function loadQuiltFromEtherpad(hostname, port, pad) {
 }
 
 $(window).ready(function() {
-  loadQuiltFromEtherpad("etherpad.mozilla.com", "9000", "sample-quilt");
+  loadQuiltFromEtherpad("etherpad.mozilla.com", "9000", "test-quilt");
 });

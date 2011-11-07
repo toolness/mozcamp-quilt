@@ -19,9 +19,65 @@ a {
   font-size: 20px;
 }
 
-.quilt-square p {
+.quilt-square > p {
   padding-left: 10px;
   padding-right: 10px;  
+}
+
+.quilt-square section {
+  position: relative;
+}
+
+.quilt-square section img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.quilt-square section h1 {
+  position: absolute;
+  top: 40px;
+  left: 0px;
+  z-index: 500;
+  font-family: 'LeagueGothicRegular';
+  text-transform: uppercase;
+  font-weight: normal;
+  margin: 0px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.quilt-square section:hover h1 {
+  display: none;
+}
+
+.quilt-square section aside {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 128px;
+  height: 128px;
+  font-size: 10px;
+  font-family: 'Helvetica Neue', Helvetica, arial, sans-serif;
+  z-index: 900;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 10px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  display: none;
+}
+
+.quilt-square section aside a {
+  color: yellow;
+  text-decoration: none;
+}
+
+.quilt-square section aside a:hover {
+  text-decoration: underline;
+}
+
+.quilt-square section:hover aside {
+  display: block;
 }
 
 #info {
