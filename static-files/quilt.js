@@ -2,23 +2,6 @@ var SQUARE_SIZE = 128;
 var POLL_DELAY = 10000;
 var ETHERPAD_GATEWAY = "http://etherpad-export.appspot.com/";
 
-function maybeFixupYoutubeEmbed(iframe, size) {
-  var fullSize = Math.floor(1.38 * size);
-  var topTitleBar = Math.floor(0.18 * size);
-
-  if (iframe.nodeName != "IFRAME")
-    return;
-  var src= $(iframe).attr("src");
-  if (!src.match(/http:\/\/www\.youtube\.com/))
-    return;
-  if (src.indexOf('?') == -1)
-    $(iframe).attr('src', src + "?controls=0");
-  $(iframe).attr("width", null).attr("height", null);
-  $(iframe).width(fullSize).height(fullSize).css({
-    marginTop: -topTitleBar
-  });
-}
-
 function maybeFixupImageDimensions(element, size) {
   function fixup() {
     var width = this.naturalWidth;
@@ -44,26 +27,19 @@ function maybeFixupImageDimensions(element, size) {
 
 function maybeFixupSection(element, size) {
   if (element.nodeName == "SECTION") {
-    var info = $('#templates .info-box-wrapper')
-      .clone()
-      .appendTo(document.body)
-      .hide();
-    info.find('> .info-box').append($(element).find("> ul").clone());
     var img = $(element).find("> img");
     if (img.length)
       maybeFixupImageDimensions(img[0], size);
     var isFocused = false;
-    $(element).click(function() {
+    $(element).find("> img, > h1").click(function() {
       isFocused = !isFocused;
       var action = isFocused ? 'addClass' : 'removeClass';
-      info.fadeToggle();
       $("div.quilt").children().each(function() {
         if (this != $(element).parent()[0]) {
           $(this)[action]("blurred");
         }
       });
       $(element).parent()[action]("focused");
-      info.show();
     });
   }
 }
@@ -102,8 +78,6 @@ function fixupQuilt(quilt, squareSize) {
   quilt.children().each(function() {
     var element = this.firstChild;
     if (!$(element).data("fixed-up")) {
-      maybeFixupYoutubeEmbed(element, squareSize);
-      maybeFixupImageDimensions(element, squareSize);
       maybeFixupSection(element, squareSize);
       $(element).data("fixed-up", true);
     }

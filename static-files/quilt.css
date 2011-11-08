@@ -23,27 +23,22 @@ a {
 }
 
 .quilt-square {
-  float: left;
-  overflow: hidden;
+  display: inline-block;
   font-size: 20px;
   -moz-transition: opacity 1s, -moz-transform 1s;
   -moz-transform-origin: 0% 0%;
 }
 
-.quilt-square > p {
-  padding-left: 10px;
-  padding-right: 10px;  
-}
-
 .quilt-square section {
   position: relative;
-  cursor: pointer;
 }
 
 .quilt-square section > img {
   position: absolute;
   top: 0px;
   left: 0px;
+  clip: rect(0px, 128px, 128px, 0px);
+  cursor: pointer;
 }
 
 .quilt-square section > h1 {
@@ -57,9 +52,10 @@ a {
   margin: 0px;
   padding: 10px;
   background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 
-.quilt-square section:hover > h1 {
+.quilt-square section > h1:hover {
   text-decoration: underline;
 }
 
@@ -67,42 +63,39 @@ a {
   display: none;
 }
 
-.info-box-wrapper {
-  position: fixed;
+.quilt-square.focused section > ul {
+  display: block;
+  position: absolute;
   top: 0px;
-  bottom: 0px;
-  left: 384px;
-  z-index: 5000;
-  width: 50%;
+  left: 128px;
+  width: 384px;
+  -moz-transform: scale(0.33);
+  -moz-transform-origin: 0% 0%;
 }
 
-.info-box {
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.info-box > ul {
+.quilt-square section > ul {
   margin-top: 0px;
   margin-bottom: 0px;
   padding: 10px;
 }
 
-.info-box > ul > li {
+.quilt-square section > ul > li {
   list-style-type: none;
   padding-bottom: 10px;
   font-size: 14px;
   color: #f0f0f0;
 }
 
-.info-box > ul > li:first-child > blockquote:first-child {
+.quilt-square section > ul > li:first-child > blockquote:first-child {
   margin-top: 0px;
 }
 
-.info-box > ul > li > blockquote:first-child {
+.quilt-square section > ul > li > blockquote:first-child {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.info-box > ul > li > blockquote:first-child {
+.quilt-square section > ul > li > blockquote:first-child {
   margin-left: 0px;
   font-size: 20px;
   font-family: 'LeagueGothicRegular';
