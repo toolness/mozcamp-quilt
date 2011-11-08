@@ -13,10 +13,21 @@ a {
   font-family: "Baskerville", Georgia, serif;
 }
 
+.quilt-square.blurred {
+  opacity: 0.2;
+}
+
+.quilt-square.focused {
+  -moz-transform: scale(3);
+  z-index: 1;
+}
+
 .quilt-square {
   float: left;
   overflow: hidden;
   font-size: 20px;
+  -moz-transition: opacity 1s, -moz-transform 1s;
+  -moz-transform-origin: 0% 0%;
 }
 
 .quilt-square > p {

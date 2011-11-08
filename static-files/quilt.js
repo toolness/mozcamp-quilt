@@ -57,8 +57,16 @@ function maybeFixupSection(element, size) {
       maybeFixupImageDimensions(img[0], size);
       maybeFixupImageDimensions(info.find("section > img")[0], size);
     }
+    var isFocused = false;
     $(element).click(function() {
-      info.show();
+      isFocused = !isFocused;
+      var action = isFocused ? 'addClass' : 'removeClass';
+      $("div.quilt").children().each(function() {
+        if (this != $(element).parent()[0]) {
+          $(this)[action]("blurred");
+        }
+      });
+      $(element).parent()[action]("focused");
     });
   }
 }
