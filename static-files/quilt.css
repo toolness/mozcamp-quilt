@@ -26,6 +26,7 @@ a {
 
 .quilt-square section {
   position: relative;
+  cursor: pointer;
 }
 
 .quilt-square section > img {
@@ -48,70 +49,11 @@ a {
 }
 
 .quilt-square section:hover > h1 {
-  display: none;
-}
-
-.quilt-square section > ul {
-  margin: 0px;
-  padding: 0px;
-}
-
-.quilt-square section > ul > li {
-  list-style-type: none;
-  display: none;
-}
-
-.quilt-square section > ul > li:first-child {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 128px;
-  height: 128px;
-  font-size: 10px;
-  font-family: 'Helvetica Neue', Helvetica, arial, sans-serif;
-  z-index: 900;
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 10px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
-
-.quilt-square section > ul > li:first-child > div.more {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  padding: 4px;
-  font-size: 16px;
-  z-index: 1000;
-  border-radius: 8px;
-  line-height: 8px;
-  margin: 4px;
-  cursor: pointer;
-}
-
-.quilt-square section > ul > li:first-child > div.more:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.quilt-square section > ul > li:first-child > div.more:before {
-  content: '»';
-}
-
-.quilt-square section > ul > li:first-child > blockquote:first-child {
-  display: none;
-}
-
-.quilt-square section > ul > li:first-child a {
-  color: yellow;
-  text-decoration: none;
-}
-
-.quilt-square section > ul > li:first-child a:hover {
   text-decoration: underline;
 }
 
-.quilt-square section:hover > ul > li:first-child {
-  display: block;
+.quilt-square section > ul {
+  display: none;
 }
 
 .info-box-wrapper {

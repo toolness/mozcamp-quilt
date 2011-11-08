@@ -57,11 +57,9 @@ function maybeFixupSection(element, size) {
       maybeFixupImageDimensions(img[0], size);
       maybeFixupImageDimensions(info.find("section > img")[0], size);
     }
-    var moreButton = $('<div class="more"></div>');
-    moreButton.click(function() {
+    $(element).click(function() {
       info.show();
     });
-    $(element).find("> ul > li:first-child").append(moreButton);
   }
 }
 
