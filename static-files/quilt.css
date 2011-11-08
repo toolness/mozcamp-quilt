@@ -23,6 +23,7 @@ a {
 }
 
 .quilt-square {
+  position: relative;
   display: inline-block;
   vertical-align: bottom;
   font-size: 20px;
