@@ -175,7 +175,9 @@ function loadQuiltFromEtherpad(hostname, port, pad) {
 }
 
 $(window).ready(function() {
-  if (window.location.hash == "#devmode")
+  if (window.location.hash == "#devmode") {
     ETHERPAD_GATEWAY = "sample-etherpad-content.html";
+    POLL_DELAY = 1000;
+  }
   loadQuiltFromEtherpad("etherpad.mozilla.com", "9000", "test-quilt");
 });
