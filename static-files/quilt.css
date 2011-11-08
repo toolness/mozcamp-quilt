@@ -125,6 +125,8 @@ a {
   margin-left: 256px;
   padding-left: 10px;
   margin-top: 0px;
+  margin-bottom: 0px;
+  min-height: 256px;
 }
 
 .info-box section > ul > li {
@@ -136,6 +138,11 @@ a {
 
 .info-box section > ul > li:first-child > blockquote:first-child {
   margin-top: 0px;
+}
+
+.info-box section > ul > li > blockquote:first-child {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .info-box section > ul > li > blockquote:first-child {
