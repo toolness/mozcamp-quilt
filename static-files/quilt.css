@@ -71,92 +71,38 @@ a {
   position: fixed;
   top: 0px;
   bottom: 0px;
-  left: 0px;
-  right: 0px;
-  background: rgba(0, 0, 0, 0.75);
+  left: 384px;
   z-index: 5000;
+  width: 50%;
 }
 
 .info-box {
-  width: 75%;
-  margin: 40px auto;
+  background: rgba(0, 0, 0, 0.8);
 }
 
-.info-box div.close {
-  text-align: right;
-  padding: 4px;
-  background: #404040;
-  cursor: pointer;
-}
-
-.info-box div.close:after {
-  content: 'X';
-}
-
-.info-box div.close:hover {
-  background: firebrick;
-}
-
-.info-box section {
-  position: relative;
-}
-
-.info-box section {
-  border-left: 1px solid #404040;
-  border-right: 1px solid #404040;
-  border-bottom: 1px solid #404040;
-}
-
-.info-box section > img {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  -moz-transform: scale(2.0);
-  -moz-transform-origin: 0% 0%;
-  -webkit-transform: scale(2.0);
-  -webkit-transform-origin: 0% 0%;
-  clip: rect(0px, 128px, 128px, 0px);
-}
-
-.info-box section > h1 {
-  position: absolute;
-  top: 80px;
-  left: 0px;
-  z-index: 500;
-  font-family: 'LeagueGothicRegular';
-  text-transform: uppercase;
-  font-weight: normal;
-  font-size: 40px;
-  margin: 0px;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.info-box section > ul {
-  margin-left: 256px;
-  padding-left: 10px;
+.info-box > ul {
   margin-top: 0px;
   margin-bottom: 0px;
-  min-height: 256px;
+  padding: 10px;
 }
 
-.info-box section > ul > li {
+.info-box > ul > li {
   list-style-type: none;
   padding-bottom: 10px;
   font-size: 14px;
   color: #f0f0f0;
 }
 
-.info-box section > ul > li:first-child > blockquote:first-child {
+.info-box > ul > li:first-child > blockquote:first-child {
   margin-top: 0px;
 }
 
-.info-box section > ul > li > blockquote:first-child {
+.info-box > ul > li > blockquote:first-child {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.info-box section > ul > li > blockquote:first-child {
+.info-box > ul > li > blockquote:first-child {
   margin-left: 0px;
   font-size: 20px;
   font-family: 'LeagueGothicRegular';

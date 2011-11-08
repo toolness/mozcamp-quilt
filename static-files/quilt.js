@@ -48,25 +48,22 @@ function maybeFixupSection(element, size) {
       .clone()
       .appendTo(document.body)
       .hide();
-    info.find('div.close').click(function() {
-      info.hide();
-    });
-    info.find('> .info-box').append($(element).clone());
+    info.find('> .info-box').append($(element).find("> ul").clone());
     var img = $(element).find("> img");
-    if (img.length) {
+    if (img.length)
       maybeFixupImageDimensions(img[0], size);
-      maybeFixupImageDimensions(info.find("section > img")[0], size);
-    }
     var isFocused = false;
     $(element).click(function() {
       isFocused = !isFocused;
       var action = isFocused ? 'addClass' : 'removeClass';
+      info.fadeToggle();
       $("div.quilt").children().each(function() {
         if (this != $(element).parent()[0]) {
           $(this)[action]("blurred");
         }
       });
       $(element).parent()[action]("focused");
+      info.show();
     });
   }
 }
