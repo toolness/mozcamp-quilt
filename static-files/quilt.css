@@ -24,6 +24,7 @@ a {
 
 .quilt-square {
   display: inline-block;
+  vertical-align: bottom;
   font-size: 20px;
   -moz-transition: opacity 1s, -moz-transform 1s;
   -moz-transform-origin: 0% 0%;
