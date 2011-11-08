@@ -15,10 +15,10 @@ a {
 
 .quilt-square.blurred {
   opacity: 0.2;
+  pointer-events: none;
 }
 
 .quilt-square.focused {
-  -moz-transform: scale(3);
   z-index: 1;
 }
 
@@ -27,6 +27,8 @@ a {
   font-size: 20px;
   -moz-transition: opacity 1s, -moz-transform 1s;
   -moz-transform-origin: 0% 0%;
+  -webkit-transition: opacity 1s, -webkit-transform 1s;
+  -webkit-transform-origin: 0% 0%;
 }
 
 .quilt-square section {
@@ -71,6 +73,8 @@ a {
   width: 384px;
   -moz-transform: scale(0.33);
   -moz-transform-origin: 0% 0%;
+  -webkit-transform: scale(0.33);
+  -webkit-transform-origin: 0% 0%;
 }
 
 .quilt-square section > ul {

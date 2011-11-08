@@ -40,6 +40,19 @@ function maybeFixupSection(element, size) {
         }
       });
       $(element).parent()[action]("focused");
+      var offset = $(element).parent().offset();
+      if (isFocused) {
+        var transform = 'translate(-' + offset.left + 'px, -' +
+                        offset.top + 'px) scale(3)';
+        $(element).parent().css({
+          '-moz-transform': transform,
+          '-webkit-transform': transform
+        });
+      } else
+        $(element).parent().css({
+          '-moz-transform': 'none',
+          '-webkit-transform': 'none'
+        });
     });
   }
 }
