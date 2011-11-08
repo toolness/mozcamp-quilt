@@ -36,12 +36,22 @@ function maybeFixupImageDimensions(element, size) {
 
 function maybeFixupSection(element, size) {
   if (element.nodeName == "SECTION") {
+    var info = $('#templates .info-box-wrapper')
+      .clone()
+      .appendTo(document.body)
+      .hide();
+    info.find('div.close').click(function() {
+      info.hide();
+    });
+    info.find('> .info-box').append($(element).clone());
     var img = $(element).find("> img");
-    if (img.length)
+    if (img.length) {
       maybeFixupImageDimensions(img[0], size);
+      maybeFixupImageDimensions(info.find("section > img")[0], size);
+    }
     var moreButton = $('<div class="more"></div>');
     moreButton.click(function() {
-      
+      info.show();
     });
     $(element).find("> ul > li:first-child").append(moreButton);
   }
