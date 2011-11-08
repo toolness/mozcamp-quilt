@@ -20,17 +20,25 @@ function maybeFixupYoutubeEmbed(iframe, size) {
 }
 
 function maybeFixupImageDimensions(element, size) {
+  function fixup() {
+    var width = this.naturalWidth;
+    var height = this.naturalHeight;
+    if (width > height) {
+      $(this).height(size).width(null);
+    } else {
+      $(this).height(null).width(size);
+    }
+  }
+  
   if (element.nodeName == "IMG") {
-    $(element).hide().load(function() {
-      var width = $(this).width();
-      var height = $(this).height();
-      if (width > height) {
-        $(this).height(size).width(null);
-      } else {
-        $(this).height(null).width(size);
-      }
-      $(this).show();
-    });
+    if (element.complete)
+      fixup.call(element);
+    else {
+      $(element).hide().load(function() {
+        fixup.call(this);
+        $(this).show();
+      });
+    }
   }
 }
 
