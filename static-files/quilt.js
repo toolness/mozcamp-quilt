@@ -182,10 +182,42 @@ function loadQuiltFromEtherpad(hostname, port, pad) {
   load();
 }
 
+function startKioskMode() {
+  var i = 0;
+  var lastSquare = null;
+
+  function focusNextSquare() {
+    var squares = $(".quilt-square");
+    if (squares.length == 0) {
+      setTimeout(focusNextSquare, 1000);
+      return;
+    }
+    if (squares.length <= i)
+      i = 0;
+    $(squares[i]).find("> section > h1").click();
+    lastSquare = squares[i];
+    i++;
+    setTimeout(unfocusCurrentSquare, 5000);
+  }
+  
+  function unfocusCurrentSquare() {
+    if (lastSquare)
+      $(lastSquare).find("> section > h1").click();
+    lastSquare = null;
+    setTimeout(focusNextSquare, 2000);
+  }
+  
+  setTimeout(focusNextSquare, 1000);
+}
+
 $(window).ready(function() {
-  if (window.location.hash == "#devmode") {
+  if (window.location.search.match(/devmode=1/)) {
     ETHERPAD_GATEWAY = "sample-etherpad-content.html";
     POLL_DELAY = 1000;
+  }
+  if (window.location.search.match(/kiosk=1/)) {
+    $("#status-bar").hide();
+    startKioskMode();
   }
   loadQuiltFromEtherpad("etherpad.mozilla.com", "9000", "test-quilt");
 });
