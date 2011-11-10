@@ -73,8 +73,8 @@ a {
   position: absolute;
   top: 0px;
   left: 128px;
-  width: 384px;
-  -moz-transform: scale(0.33);
+  width: 512px;
+  -moz-transform: scale(0.25);
   -moz-transform-origin: 0% 0%;
   -webkit-transform: scale(0.33);
   -webkit-transform-origin: 0% 0%;

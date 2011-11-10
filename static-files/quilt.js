@@ -43,7 +43,7 @@ function maybeFixupSection(element, size) {
       var offset = $(element).parent().offset();
       if (isFocused) {
         var transform = 'translate(-' + offset.left + 'px, -' +
-                        offset.top + 'px) scale(3)';
+                        offset.top + 'px) scale(4)';
         $(element).parent().css({
           '-moz-transform': transform,
           '-webkit-transform': transform
