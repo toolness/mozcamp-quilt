@@ -55,6 +55,7 @@ a {
   font-weight: normal;
   margin: 0px;
   padding: 10px;
+  line-height: 25px;
   background: rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
