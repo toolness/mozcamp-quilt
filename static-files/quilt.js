@@ -125,7 +125,21 @@ function applyQuiltChanges(oldQuilt, newQuilt) {
   }
 }
 
+function removeDuplicateEntries(div) {
+  var titles = {};
+  
+  div.find("section > h1").each(function() {
+    var title = $(this).text().toLowerCase();
+    if (title in titles)
+      $(this).closest("section").remove();
+    else
+      titles[title] = true;
+  });
+}
+
 function createQuilt(div) {
+  removeDuplicateEntries(div);
+  
   var quilt = buildQuilt(div);
   var oldQuilt = $(".quilt");
   if (oldQuilt.length) {
