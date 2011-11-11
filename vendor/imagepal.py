@@ -36,12 +36,16 @@ class HTMLDocument(object):
                 filename = os.path.join(self.destdir, basename)
             if filename is None or not os.path.exists(filename):
                 print "fetching %s" % src
-                f = urllib2.urlopen(src)
-                ext = mimetypes.guess_extension(f.info()['content-type'])
-                ext = preferred_exts.get(ext, ext)
-                basename = "img_%s%s" % (hashlib.md5(src).hexdigest(), ext)
-                filename = os.path.join(self.destdir, basename)
-                open(filename, 'w').write(f.read())
+                try:
+                    f = urllib2.urlopen(src)
+                    ext = mimetypes.guess_extension(f.info()['content-type'])
+                    ext = preferred_exts.get(ext, ext)
+                    basename = "img_%s%s" % (hashlib.md5(src).hexdigest(),
+                                             ext)
+                    filename = os.path.join(self.destdir, basename)
+                    open(filename, 'w').write(f.read())
+                except urllib2.HTTPError, e:
+                    print "ERROR %s" % e
             node.setAttribute('src', basename)
         children = [child for child in node.childNodes
                     if child.nodeType == child.ELEMENT_NODE]
