@@ -85,7 +85,7 @@ function buildQuilt(div) {
 
 function fixupQuilt(quilt, squareSize) {  
   //var squaresPerSide = Math.floor(Math.sqrt(quilt.children().length));
-  var squaresPerSide = 5;
+  var squaresPerSide = 8;
   quilt.children().width(squareSize).height(squareSize);
   quilt.width(squareSize * squaresPerSide);
 
