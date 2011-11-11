@@ -33,4 +33,9 @@ def freeze():
 
     filename = 'sample-etherpad-content.html'
     source = open(os.path.join(staticdir, filename)).read()
-    imagepal.rebase(source, distdir, filename)
+    quilt = imagepal.rebase(source, distdir)
+
+    html = open(os.path.join(staticdir, 'index.html')).read()
+    index = open(os.path.join(distdir, 'index.html'), 'w')
+    index.write(html + '<div id="embedded-quilt">\n%s</div>' % quilt)
+    index.close()

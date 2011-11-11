@@ -2,6 +2,7 @@ import os
 import urllib2
 import hashlib
 import mimetypes
+import StringIO
 
 import html5lib
 from html5lib.serializer.htmlserializer import HTMLSerializer
@@ -55,8 +56,8 @@ class HTMLDocument(object):
         for item in output_generator:
             output.write(item.encode('utf-8'))
 
-def rebase(source, destdir, filename):
-    f = open(os.path.join(destdir, filename), 'w')
+def rebase(source, destdir):
+    f = StringIO.StringIO()
     doc = HTMLDocument(source, destdir)
     doc.serialize(f)
-    f.close()
+    return f.getvalue()

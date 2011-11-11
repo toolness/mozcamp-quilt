@@ -125,6 +125,18 @@ function applyQuiltChanges(oldQuilt, newQuilt) {
   }
 }
 
+function createQuilt(div) {
+  var quilt = buildQuilt(div);
+  var oldQuilt = $(".quilt");
+  if (oldQuilt.length) {
+    applyQuiltChanges(oldQuilt, quilt);
+    fixupQuilt(oldQuilt, SQUARE_SIZE);
+  } else {
+    fixupQuilt(quilt, SQUARE_SIZE);
+    quilt.appendTo(document.body);
+  }
+}
+
 function loadQuiltFromEtherpad(hostname, port, pad) {
   var lastLoad = new Date();
   var gateway = ETHERPAD_GATEWAY;
@@ -161,15 +173,7 @@ function loadQuiltFromEtherpad(hostname, port, pad) {
       },
       success: function(data) {
         div.html(data);
-        var quilt = buildQuilt(div);
-        var oldQuilt = $(".quilt");
-        if (oldQuilt.length) {
-          applyQuiltChanges(oldQuilt, quilt);
-          fixupQuilt(oldQuilt, SQUARE_SIZE);
-        } else {
-          fixupQuilt(quilt, SQUARE_SIZE);
-          quilt.appendTo(document.body);
-        }
+        createQuilt(div);
         lastLoad = new Date();
       },
       complete: function() {
@@ -212,6 +216,11 @@ function startKioskMode() {
 }
 
 $(window).ready(function() {
+  var embeddedQuilt = $('#embedded-quilt');
+  if (embeddedQuilt.length != 0) {
+    $("#status-bar").hide();
+    createQuilt(embeddedQuilt);
+  }
   if (window.location.search.match(/devmode=1/)) {
     ETHERPAD_GATEWAY = "sample-etherpad-content.html";
     POLL_DELAY = 1000;
@@ -220,5 +229,6 @@ $(window).ready(function() {
     $("#status-bar").hide();
     startKioskMode();
   }
-  loadQuiltFromEtherpad("etherpad.mozilla.com", "9000", "test-quilt");
+  if (embeddedQuilt.length == 0)
+    loadQuiltFromEtherpad("etherpad.mozilla.com", "9000", "test-quilt");
 });

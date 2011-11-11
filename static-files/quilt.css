@@ -121,3 +121,7 @@ a {
   background: rgba(0, 0, 0, 0.75);
   z-index: 2500;
 }
+
+#embedded-quilt {
+  display: none;
+}
