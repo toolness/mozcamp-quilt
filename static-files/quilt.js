@@ -1,3 +1,4 @@
+var SQUARES_PER_SIDE = 8;
 var SQUARE_SIZE = 128;
 var POLL_DELAY = 10000;
 var ETHERPAD_GATEWAY = "http://etherpad-export.appspot.com/";
@@ -109,10 +110,8 @@ function buildQuilt(div) {
 }
 
 function fixupQuilt(quilt, squareSize) {  
-  //var squaresPerSide = Math.floor(Math.sqrt(quilt.children().length));
-  var squaresPerSide = 8;
   quilt.children().width(squareSize).height(squareSize);
-  quilt.width(squareSize * squaresPerSide);
+  quilt.width(squareSize * SQUARES_PER_SIDE);
 
   quilt.children().each(function() {
     var element = this.firstChild;
