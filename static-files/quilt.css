@@ -31,6 +31,8 @@ a {
   -moz-transform-origin: 0% 0%;
   -webkit-transition: opacity 1s, -webkit-transform 1s;
   -webkit-transform-origin: 0% 0%;
+  -o-transition: opacity 1s, -o-transform 1s;
+  -o-transform-origin: 0% 0%;
 }
 
 .quilt-square section {
@@ -78,6 +80,8 @@ a {
   -moz-transform-origin: 0% 0%;
   -webkit-transform: scale(0.25);
   -webkit-transform-origin: 0% 0%;
+  -o-transform: scale(0.25);
+  -o-transform-origin: 0% 0%;
 }
 
 .quilt-square section > ul {

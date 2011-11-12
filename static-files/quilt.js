@@ -46,12 +46,14 @@ function maybeFixupSection(element, size) {
                         offset.top + 'px) scale(4)';
         $(element).parent().css({
           '-moz-transform': transform,
-          '-webkit-transform': transform
+          '-webkit-transform': transform,
+          '-o-transform': transform
         });
       } else
         $(element).parent().css({
           '-moz-transform': 'none',
-          '-webkit-transform': 'none'
+          '-webkit-transform': 'none',
+          '-o-transform': 'none'
         });
     });
   }
