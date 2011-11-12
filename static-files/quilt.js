@@ -1,27 +1,34 @@
 var SQUARE_SIZE = 128;
 var POLL_DELAY = 10000;
 var ETHERPAD_GATEWAY = "http://etherpad-export.appspot.com/";
+var USE_CANVAS_WORKAROUND = (window.navigator.product == "Gecko");
 
 function maybeFixupImageDimensions(element, size) {
-  function fixup() {
-    var width = this.naturalWidth;
-    var height = this.naturalHeight;
-    if (width > height) {
-      $(this).height(size).width(null);
-    } else {
-      $(this).height(null).width(size);
-    }
-  }
-  
   if (element.nodeName == "IMG") {
-    if (element.complete)
-      fixup.call(element);
-    else {
-      $(element).hide().load(function() {
-        fixup.call(this);
-        $(this).show();
-      });
-    }
+    $(element).hide().load(function() {
+      var width = this.naturalWidth;
+      var height = this.naturalHeight;
+      var scaledWidth;
+      var scaledHeight;
+      if (width > height) {
+        scaledWidth = Math.floor(size/height * width);
+        scaledHeight = size;
+      } else {
+        scaledWidth = size;
+        scaledHeight = Math.floor(size/width * height);
+      }
+      $(this).width(scaledWidth).height(scaledHeight).show();
+
+      if (USE_CANVAS_WORKAROUND) {
+        var canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(this, 0, 0, scaledWidth, scaledHeight);
+        $(canvas).data("hi-res", this);
+        $(this).replaceWith(canvas);
+      }
+    });
   }
 }
 
@@ -31,7 +38,7 @@ function maybeFixupSection(element, size) {
     if (img.length)
       maybeFixupImageDimensions(img[0], size);
     var isFocused = false;
-    $(element).find("> img, > h1").click(function() {
+    $(element).find("> h1").click(function() {
       isFocused = !isFocused;
       var action = isFocused ? 'addClass' : 'removeClass';
       $("div.quilt").children().each(function() {
@@ -41,7 +48,15 @@ function maybeFixupSection(element, size) {
       });
       $(element).parent()[action]("focused");
       var offset = $(element).parent().offset();
+      var loRes, hiRes;
       if (isFocused) {
+        if (USE_CANVAS_WORKAROUND) {
+          loRes = $(element).find("> canvas");
+          hiRes = loRes.data("hi-res");
+          $(hiRes).data("lo-res", loRes[0]);
+          loRes.replaceWith(hiRes);
+        }
+
         var transform = 'translate(-' + offset.left + 'px, -' +
                         offset.top + 'px) scale(4)';
         $(element).parent().css({
@@ -49,12 +64,20 @@ function maybeFixupSection(element, size) {
           '-webkit-transform': transform,
           '-o-transform': transform
         });
-      } else
+      } else {
+        if (USE_CANVAS_WORKAROUND) {
+          hiRes = $(element).find("> img");
+          loRes = hiRes.data("lo-res");
+          $(loRes).data("hi-res", hiRes[0]);
+          hiRes.replaceWith(loRes);
+        }
+        
         $(element).parent().css({
           '-moz-transform': 'none',
           '-webkit-transform': 'none',
           '-o-transform': 'none'
         });
+      }
     });
   }
 }

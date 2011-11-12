@@ -44,7 +44,6 @@ a {
   top: 0px;
   left: 0px;
   clip: rect(0px, 128px, 128px, 0px);
-  cursor: pointer;
 }
 
 .quilt-square section > h1 {
