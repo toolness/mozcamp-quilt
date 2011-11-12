@@ -3,6 +3,7 @@ import urllib2
 import hashlib
 import mimetypes
 import StringIO
+from urlparse import urlparse
 
 import html5lib
 from html5lib.serializer.htmlserializer import HTMLSerializer
@@ -26,7 +27,7 @@ class HTMLDocument(object):
     def _traverse(self, node):
         if node.nodeName == 'img':
             src = node.getAttribute('src')
-            guess_ext = ".%s" % src.split('.')[-1].lower()
+            guess_ext = ".%s" % urlparse(src).path.split('.')[-1].lower()
             ext = None
             basename = None
             filename = None
