@@ -18,7 +18,7 @@ class HTMLDocument(object):
     def __init__(self, source, destdir):
         dombuilder = html5lib.treebuilders.getTreeBuilder("dom")
         p = html5lib.HTMLParser(tree=dombuilder)
-        self.document = p.parse(source)
+        self.document = p.parse(source, encoding="utf-8")
         self.html = self.document.documentElement
         self.destdir = destdir
         self.counter = 0
